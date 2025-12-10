@@ -1,0 +1,24 @@
+@use '../../assets/vars' as *;
+
+.container {
+  padding: 40px 16px;
+
+
+  @media (min-width: $media-mob-lg) {
+   padding: 40px 40px;
+  }
+
+  @media (min-width: $media-tab-lg) {
+    padding: 64px 64px;
+  }
+
+  @media (min-width: $media-des-sm) {
+    padding-left: calc((100% - 1120px) / 2);
+    padding-right: calc((100% - 1120px) / 2);
+  }
+
+  @media (min-width: $media-des-lg) {
+    padding-left: calc((100% - 1560px) / 2);
+    padding-right: calc((100% - 1560px) / 2);
+  }
+}

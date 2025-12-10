@@ -1,0 +1,48 @@
+@use '../../../../../assets/vars' as *;
+@use '../../../../../assets/animations' as *;
+
+.nextButton {
+  width: fit-content;
+  background-color: $black_3;
+  color: $white;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 40px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  outline: none;
+  transition: border-color 0.3s;
+  cursor: pointer;
+  font-size: 1.8rem;
+
+  span {
+    transform: translateX(0);
+  }
+
+  @media(any-hover: hover) {
+    &:hover {
+      background-color: $violet;
+
+      span {
+        animation: transform .3s forwards;
+      }
+    }
+  }
+
+  &:focus-visible {
+    border-color: $white;
+
+    span {
+      animation: transform .3s forwards;
+    }
+  }
+
+  &:active {
+    background-color: $cornflower-blue;
+  }
+}
