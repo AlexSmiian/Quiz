@@ -1,11 +1,25 @@
-import { useEffect, useState } from "react";
-import type {QuizState} from "../../entities/quiz/model/types.ts";
-import {storage} from "../../shared/lib/storage.ts";
-import {questions} from "../../entities/quiz/model/questions.ts";
+import { createContext, useContext, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+import { questions } from '../entities/quiz/model/questions';
+import { storage } from '../shared/lib/storage';
+import type {Question, QuizState} from "../entities/quiz/model/types.ts";
 
 const STORAGE_KEY = "quiz-state";
 
-export default function useQuiz() {
+interface QuizContextType {
+    state: QuizState;
+    currentQuestion: Question;
+    questions: Question[];
+    handleAnswer: (questionId: string, answerId: string) => void;
+    handleNext: () => void;
+    handleEmailChange: (email: string) => void;
+    handleComplete: () => void;
+    handleRestart: () => void;
+}
+
+const QuizContext = createContext<QuizContextType | undefined>(undefined);
+
+export function QuizProvider({ children }: { children: ReactNode }) {
     const [state, setState] = useState<QuizState>(() => {
         const saved = storage.get<QuizState>(STORAGE_KEY);
         return saved || {
@@ -51,7 +65,7 @@ export default function useQuiz() {
 
     const currentQuestion = questions[state.currentStep];
 
-    return {
+    const value = {
         state,
         currentQuestion,
         questions,
@@ -61,4 +75,18 @@ export default function useQuiz() {
         handleComplete,
         handleRestart
     };
+
+    return (
+        <QuizContext.Provider value={value}>
+            {children}
+        </QuizContext.Provider>
+    );
+}
+
+export function useQuizContext() {
+    const context = useContext(QuizContext);
+    if (context === undefined) {
+        throw new Error('useQuizContext must be used within QuizProvider');
+    }
+    return context;
 }

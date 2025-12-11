@@ -1,7 +1,7 @@
 import QuestionScreen from "../QuestionScreen/QuestionScreen.tsx";
 import EmailScreen from "../EmailScreen/EmailScreen.tsx";
 import ResultScreen from "../ResultScreen/ResultScreen.tsx";
-import useQuiz from "../../../hooks/useQuiz.ts";
+import { useQuizContext } from "../../../../context/QuizContext";
 
 export default function Quiz() {
     const {
@@ -13,7 +13,7 @@ export default function Quiz() {
         handleEmailChange,
         handleComplete,
         handleRestart
-    } = useQuiz();
+    } = useQuizContext();
 
     if (state.isCompleted) {
         return (
